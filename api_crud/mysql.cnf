@@ -1,0 +1,6 @@
+# my.cnf 3306
+[client]
+database = movie_schema
+user = springuser
+password = atleast!Cap1tal@
+default-character-set = utf8

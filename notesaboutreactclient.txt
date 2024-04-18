@@ -1,0 +1,2 @@
+the reactjs client project is located 
+in java repository : javamodels/movie-management-system-react-sprinboot/movie-management-system-react

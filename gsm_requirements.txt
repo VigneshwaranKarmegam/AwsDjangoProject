@@ -1,0 +1,26 @@
+#these are installed as a set when we do pip install djangoframework
+asgiref==3.7.2
+Django==5.0.3
+djangorestframework==3.14.0
+sqlparse==0.4.4
+#these are installed as a set when we do pip install djangorestframework-simplejwt
+djangorestframework-simplejwt==5.3.1
+PyJWT==2.8.0
+
+django-cors-headers==4.3.1
+django-filter==24.1
+
+#for timezone
+pytz==2024.1
+
+#For example, typing.TypeGuard is new in Python 3.10, but typing_extensions allows users on previous Python versions to use it too.
+typing_extensions==4.10.0
+
+##for mysql
+#mysqlclient==2.2.4
+##for postgresql
+#psycopg==3.1.18
+
+## This library is the reference implementation of the Python wheel packaging standard, as defined in PEP 427.
+##It should be noted that wheel is not intended to be used as a library, and as such there is no stable, public API.
+#wheel==0.43.0
