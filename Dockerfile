@@ -1,10 +1,9 @@
 FROM python:3
 
 WORKDIR /app
-
-RUN pip install django==4.2.11
-
 COPY . .
+# Install the dependencies
+RUN pip install --no-cache-dir -r requirements.txt
 
 RUN python manage.py migrate
 

@@ -150,7 +150,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'DjangoAwsDB',
         'USER': 'postgres',
-        'PASSWORD': 'Password',
+        'PASSWORD': '',
         'HOST': 'db-instance-id-1.cvuw2cukgjmq.us-east-2.rds.amazonaws.com',
         'PORT': '5432'
     }
