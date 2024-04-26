@@ -19,8 +19,9 @@
 node {
     checkout scm
     withEnv(['MYTOOL_HOME=/usr/local/mytool']) {
-        docker.image("postgres:latest").withRun() { db ->
+        docker.image("postgres:latest").run() { db ->
             withEnv(['DB_USERNAME=postgres', 'DB_PASSWORD=', "DB_HOST=db", "DB_PORT=5432"]) {
+                echo "${db.id}"
                 docker.build("aws_django_img", "--file Dockerfile .").inside("--link ${db.id}:postgres") {
                     sh "python manage.py collectstatic"
                     sh "python manage.py makemigrations"
