@@ -51,6 +51,7 @@ services:
 
   app:
     restart: unless-stopped
+    image: 
     build:
       context: .
       dockerfile: Dockerfile

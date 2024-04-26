@@ -1,16 +1,32 @@
+// # sample Jenkinsfile. Might not compile
+// node {
+//     checkout scm //downloads source code
+//     withEnv(['MYTOOL_HOME=/usr/local/mytool']) {
+//         docker.image("postgres:9.2").withRun() { db ->
+//                 docker.image("postgres:9.2").withRun() { db ->
+//                     withEnv(['DB_USERNAME=postgres', 'DB_PASSWORD=', "DB_HOST=db", "DB_PORT=5432"]) {
+//                         docker.build(imageName, "--file .woloxci/Dockerfile .").inside("--link ${db.id}:postgres --link ${redis.id}:redis") {
+//                             sh "RUN python manage.py migrate"
+//                             sh "rake db:migrate"
+//                             sh "bundle exec rspec spec"
+//                         }
+//                     }
+//                 }  
+//         }
+//     }
+// }
+
 node {
     checkout scm
-    /*
-     * In order to communicate with the MySQL server, this Pipeline explicitly
-     * maps the port (`3306`) to a known port on the host machine.
-     */
-
-    docker.image('postgres:latest').withRun('-e "POSTGRES_PASSWORD=test@1234!"' +
-                                           ' -p 5432:5432') { c ->
-        /* Wait until mysql service is up */
-        // sh 'while ! mysqladmin ping -h0.0.0.0 --silent; do sleep 1; done'
-        // createdb -U postgres sample1_database;
-        // /* Run some tests which require MySQL */
-        // sh 'make check'
+    withEnv(['MYTOOL_HOME=/usr/local/mytool']) {
+        docker.image("postgres:latest").withRun() { db ->
+            withEnv(['DB_USERNAME=postgres', 'DB_PASSWORD=', "DB_HOST=db", "DB_PORT=5432"]) {
+                docker.build("aws_django_img", "--file Dockerfile .").inside("--link ${db.id}:postgres") {
+                    sh "python manage.py collectstatic"
+                    sh "python manage.py makemigrations"
+                    sh "python manage.py migrate"     
+                }
+            }
+        }
     }
 }
