@@ -19,15 +19,16 @@
 node {
     checkout scm
     withEnv(['MYTOOL_HOME=/usr/local/mytool']) {
-        docker.image("postgres:latest").run() { db ->
-            withEnv(['DB_USERNAME=postgres', 'DB_PASSWORD=', "DB_HOST=db", "DB_PORT=5432"]) {
+        docker.image("postgres:latest").withRun('-e "POSTGRES_PASSWORD=test@1234!" --name "postgrescont" ' +
+                                                       ' -p 5432:5432') { db ->
+            // withEnv(['DB_USERNAME=postgres', 'DB_PASSWORD=', "DB_HOST=db", "DB_PORT=5432"]) {
                 echo "${db.id}"
                 docker.build("aws_django_img", "--file Dockerfile .").inside("--link ${db.id}:postgres") {
                     sh "python manage.py collectstatic"
                     sh "python manage.py makemigrations"
                     sh "python manage.py migrate"     
                 }
-            }
+            // }
         }
     }
 }
