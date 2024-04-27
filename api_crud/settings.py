@@ -151,7 +151,8 @@ DATABASES = {
         'NAME': 'DjangoAwsDB',
         'USER': 'postgres',
         'PASSWORD': '',
-        'HOST': 'db-instance-id-1.cvuw2cukgjmq.us-east-2.rds.amazonaws.com',
+        #'HOST': 'db-instance-id-1.cvuw2cukgjmq.us-east-2.rds.amazonaws.com',
+        'HOST': 'postgrescont',
         'PORT': '5432'
     }
 }
