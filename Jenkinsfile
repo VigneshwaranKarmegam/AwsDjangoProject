@@ -24,6 +24,7 @@ node {
            //  withEnv(['DB_USERNAME=postgres', 'DB_PASSWORD=', "DB_HOST=db", "DB_PORT=5432"]) {
                 echo "${db.id}"
                 docker.build("aws_django_img", "--file Dockerfile .").inside("--link ${db.id}:postgres") {
+                    sh "psql -c 'CREATE DATABASE DjangoAwsDB;' "
                     sh "python manage.py collectstatic --noinput --clear"
                     sh "python manage.py makemigrations"
                     sh "python manage.py migrate"  
