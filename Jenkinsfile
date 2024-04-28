@@ -19,15 +19,15 @@
 node {
     checkout scm
     withEnv(['MYTOOL_HOME=/usr/local/mytool']) {
-        docker.image("postgres:latest").withRun('-e "POSTGRES_PASSWORD=test@1234!" --name "postgrescont" ' +
-                                                       ' -p 5432:5432') { db ->
-               // sh "ls -lart /usr/bin/psql"
+        docker.image("postgres:latest").inside('-e "POSTGRES_PASSWORD=test@1234!" --name "postgrescont" ' +
+                                                       ' -p 5432:5432') { 
+                sh "ls -lart /usr/bin/psql"
                 sh 'echo $PATH'            
-                sh 'while ! [ -f /usr/bin/psql ]; do sleep 10; done'
+             //   sh 'while ! [ -f /usr/bin/psql ]; do sleep 10; done'
                 sh 'echo $PATH'
                 sh "psql -U postgres -c 'CREATE DATABASE DjangoAwsDB;' "
            //  withEnv(['DB_USERNAME=postgres', 'DB_PASSWORD=', "DB_HOST=db", "DB_PORT=5432"]) {
-                echo "${db.id}"
+               // echo "${db.id}"
                 //if ! [ -f /path/to/file ];
                 docker.build("aws_django_img", "--file Dockerfile .").inside("--link postgrescont:postgres") {
                     sh "python manage.py collectstatic --noinput --clear"
