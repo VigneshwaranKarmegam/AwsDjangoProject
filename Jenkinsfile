@@ -21,9 +21,9 @@ node {
     withEnv(['MYTOOL_HOME=/usr/local/mytool']) {
         docker.image("postgres:latest").withRun('-e "POSTGRES_PASSWORD=test@1234!" --name "postgrescont" ' +
                                                        ' -p 5432:5432') { db ->
-              //  sh "ls -lart /"
+                sh "ls -lart /usr/bin/psql"
                 sh 'echo $PATH'            
-                sh 'while ! [ -f /usr/bin/psql ]; do sleep 1; done'
+               // sh 'while ! [ -f /usr/bin/psql ]; do sleep 1; done'
                 // sh "psql -c 'CREATE DATABASE DjangoAwsDB;' "
            //  withEnv(['DB_USERNAME=postgres', 'DB_PASSWORD=', "DB_HOST=db", "DB_PORT=5432"]) {
                 echo "${db.id}"
