@@ -21,11 +21,13 @@ node {
     withEnv(['MYTOOL_HOME=/usr/local/mytool']) {
         docker.image("postgres:latest").withRun('-e "POSTGRES_PASSWORD=test@1234!" --name "postgrescont" ' +
                                                        ' -p 5432:5432') { db ->
-                sh "ls -lart /"
+              //  sh "ls -lart /"
+                echo $PATH            
+                sh 'while ! [ -f /usr/bin/psql ]; do sleep 1; done'
                 // sh "psql -c 'CREATE DATABASE DjangoAwsDB;' "
            //  withEnv(['DB_USERNAME=postgres', 'DB_PASSWORD=', "DB_HOST=db", "DB_PORT=5432"]) {
                 echo "${db.id}"
-                
+                //if ! [ -f /path/to/file ];
                 docker.build("aws_django_img", "--file Dockerfile .").inside("--link postgrescont:postgres") {
                     sh "python manage.py collectstatic --noinput --clear"
                     sh "python manage.py makemigrations"
