@@ -50,13 +50,13 @@ pipeline {
         //     }
         // }
 
-        // stage('Cleanup Previous Containers') {
-        //     steps {
-        //         script {
-        //             sh 'docker-compose down'
-        //         }
-        //     }
-        // }
+        stage('Cleanup Previous Containers') {
+            steps {
+                script {
+                    sh 'docker-compose down'
+                }
+            }
+        }
 
         stage('Build and Test') {
             steps {
@@ -76,13 +76,13 @@ pipeline {
         }
     }
 
-    // post {
-    //     always {
-    //         script {
-    //             // Clean up Docker resources
-    //             sh 'echo "y" | docker system prune -a --volumes'
-    //         }
-    //     }
-    // }
+    post {
+        always {
+            script {
+                // Clean up Docker resources
+                sh 'echo "y" | docker system prune -a --volumes'
+            }
+        }
+    }
 
 }
