@@ -76,13 +76,13 @@ pipeline {
         // }
     }
 
-    post {
-        always {
-            script {
-                // Clean up Docker resources
-                sh 'echo "y" | docker system prune -a --volumes'
-            }
-        }
-    }
+    // post {
+    //     always {
+    //         script {
+    //             // Clean up Docker resources
+    //             sh 'echo "y" | docker system prune -a --volumes'
+    //         }
+    //     }
+    // }
 
 }
