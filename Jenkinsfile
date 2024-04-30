@@ -61,8 +61,8 @@ pipeline {
         stage('Build and Test') {
             steps {
                 script {
-                    sh 'docker-compose build'
-                    sh 'docker-compose run web python manage.py test'
+                    bat 'docker-compose build'
+                    bat 'docker-compose run web python manage.py test'
                 }
             }
         }
@@ -70,7 +70,7 @@ pipeline {
         stage('Deploy') {
             steps {
                 script {
-                    sh 'docker-compose up -d'
+                    bat 'docker-compose up -d'
                 }
             }
         }
@@ -80,7 +80,7 @@ pipeline {
         always {
             script {
                 // Clean up Docker resources
-                sh 'echo "y" | docker system prune -a --volumes'
+                bat 'echo "y" | docker system prune -a --volumes'
             }
         }
     }
