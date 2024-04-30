@@ -53,7 +53,7 @@ pipeline {
         stage('Cleanup Previous Containers') {
             steps {
                 script {
-                    sh 'docker-compose down'
+                    bat 'docker-compose down'
                 }
             }
         }
