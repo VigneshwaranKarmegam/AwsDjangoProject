@@ -1,25 +1,20 @@
 services:
   web:
     build:
-      context: .
-    container_name: django_restapi_cnt
+      context: ./app
     volumes:
       - static-volume:/home/app/web/static
       - media-volume:/home/app/web/media
     ports:
-      - 8001:8000
+      - 8000:8000
     env_file:
       - ./.env
     depends_on:
       - db
   db:
     image: postgres:16
-    container_name: postgres_cnt
-    ports:
-      - 5435:5432
     volumes:
       - postgres-data:/var/lib/postgresql/data/
-      - ./sql/create_schema.sql:/docker-entrypoint-initdb.d/create_schema.sql
     env_file:
       - ./.env.db
   nginx:
@@ -28,7 +23,7 @@ services:
       - static-volume:/home/app/web/static
       - media-volume:/home/app/web/media
     ports:
-      - 81:80
+      - 80:80
     depends_on:
       - web
 

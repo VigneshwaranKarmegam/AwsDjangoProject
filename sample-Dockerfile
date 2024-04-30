@@ -1,7 +1,5 @@
 # Pull python base image
-#FROM python:3.11.4-slim-buster
-FROM python:3.9.19-bookworm
-#FROM python:3
+FROM python:3.11.4-slim-buster
 
 # Set environment variables
 ENV PYTHONDONTWRITEBYTECODE 1
@@ -25,8 +23,8 @@ COPY ./requirements.txt $APP_HOME
 # Install python dependencies
 RUN pip install --upgrade pip && pip install --no-cache-dir -r requirements.txt
 
-# Install other dependencies (Debian) for nc command used in entrypoint.sh file
-RUN apt-get update && apt-get install -y --no-install-recommends netcat-traditional && rm -rf /var/lib/apt/lists/*
+# Install other dependencies (Debian)
+RUN apt-get update && apt-get install -y --no-install-recommends netcat && rm -rf /var/lib/apt/lists/*
 
 # Copy entrypoint.sh
 COPY ./entrypoint.sh $APP_HOME
@@ -50,9 +48,9 @@ RUN python manage.py collectstatic --no-input --clear
 EXPOSE 8000
 
 # Healthcheck
-#HEALTHCHECK --interval=5s \
-#            --timeout=3s \
-#            CMD curl --fail http://localhost:8000/health-check || exit 1
+HEALTHCHECK --interval=5s \
+            --timeout=3s \
+            CMD curl --fail http://localhost:8000/health-check || exit 1
 
 # Run entrypoint.sh
 ENTRYPOINT ["/home/app/web/entrypoint.sh"]

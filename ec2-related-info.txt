@@ -1,0 +1,18 @@
+sudo dnf search python3.11
+
+sudo dnf install python3.11 -y
+
+rm -vrf <dir-name>
+sudo yum update
+sudo yum install git
+
+ ec2-34-228-19-10.compute-1.amazonaws.com
+ 34.228.19.10 (Public) 172.31.16.174 (private)
+
+public dns: ec2-34-228-19-10.compute-1.amazonaws.com
+
+ssh -i "id_rsa" ec2-user@ec2-34-228-19-10.compute-1.amazonaws.com
+
+
+ ===
+ gsm .pem file location : /Volumes/gsmfhssd - Data/Users/gsmmgsm/gsm/Personal/gsm/aws-ec2-keypair-pem/gsm-ec2-keypair.pem

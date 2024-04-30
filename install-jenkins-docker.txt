@@ -1,0 +1,68 @@
+Notes for pipeline ci/cd for django with postgres is taken from the following 2 urls:
+https://blog.devgenius.io/ci-cd-pipeline-for-a-django-application-using-postgresql-gunicorn-nginx-docker-jenkins-6987b6bd1a40
+#https://levelup.gitconnected.com/creating-and-filling-a-postgres-db-with-docker-compose-e1607f6f882f
+
+git clone https://gsmmgsm@bitbucket.org/gsmmgsm/django-restapi-for-react-admin.git
+
+start database server:
+pg_ctl -D /var/lib/postgresql/data -l logfile start
+
+installing jenkins using brew:
+
+    Install the latest LTS version: brew install jenkins-lts
+    Start the Jenkins service: brew services start jenkins-lts
+    Restart the Jenkins service: brew services restart jenkins-lts
+    Update the Jenkins version: brew upgrade jenkins-lts
+unlock pwd: d852b1666ce2486f9ea2d99184d2b8cf location: /Users/gsmmgsm/.jenkins/secrets/initialAdminPassword
+scm: https://gsmmgsm@bitbucket.org/gsmmgsm/django-restapi-for-react-admin.git
+===
+====
+Setting PATH in Jenkins global config (from web ui(8080))
+https://stackoverflow.com/questions/43987005/jenkins-does-not-recognize-command-sh
+
+Path setup for mac OS users
+The /usr/local/bin directory is not included in the macOS PATH for Docker images by default.
+If executables from /usr/local/bin need to be called from within Jenkins, the PATH needs to be extended
+to include /usr/local/bin. Add a path node in the
+file "/usr/local/Cellar/jenkins-lts/XXX/homebrew.mxcl.jenkins-lts.plist" like this:
+Contents of homebrew.mxcl.jenkins-lts.plist
+<key>EnvironmentVariables</key>
+<dict>
+<key>PATH</key>
+<string>/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Applications/Docker.app/Contents/Resources/bin</string>
+<string>/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Applications/Docker.app/Contents/Resources/bin:/Users/gsmmgsm/Library/Containers/group.com.docker/Applications/Docker.app/Contents/Resources/bin</string>
+</dict>
+
+The revised PATH string should be a colon separated list of directories in the same format as the PATH environment variable and should include:
+* /usr/local/bin
+* /usr/bin
+* /bin
+* /usr/sbin
+* /sbin
+* /Applications/Docker.app/Contents/Resources/bin/
+* /Users/XXX/Library/Group\ Containers/group.com.docker/Applications/Docker.app/Contents/Resources/bin (where XXX is replaced by your user name)
+Now, restart jenkins using brew services restart jenkins-lts.
+
+eg:
+<string>/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Applications/Docker.app/Contents/Resources/bin:/Users/gsmmgsm/Library/Group\ Containers/group.com.docker/Applications/Docker.app/Contents/Resources/bin</string>
+
+====
+install jenkins using Docker: (not working!!!)
+
+docker pull jenkins/jenkins
+docker network create jenkins
+
+docker run \
+  --name jenkins-docker \
+  --rm \
+  --detach \
+  --privileged \
+  --network jenkins \
+  --network-alias docker \
+  --env DOCKER_TLS_CERTDIR=/certs \
+  --volume jenkins-docker-certs:/certs/client \
+  --volume jenkins-data:/var/jenkins_home \
+  --publish 8080:8080 \
+    docker:dind \
+  --storage-driver overlay2
+

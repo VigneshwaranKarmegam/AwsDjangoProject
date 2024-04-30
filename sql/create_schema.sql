@@ -1,0 +1,1 @@
+CREATE DATABASE movie_schema WHERE NOT EXISTS (SELECT FROM pg_database WHERE datname = 'movie_schema');

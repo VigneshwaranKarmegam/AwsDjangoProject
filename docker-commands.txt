@@ -1,0 +1,18 @@
+docker images
+docker ps -a
+
+docker start <cid/cname>
+docker stop <cid/cname>
+
+docker rm <cid/cname>
+docker rmi <imid>
+
+create a new container(--name) and run for the given imageid:
+docker run -d --name <cname> <imageid>
+
+go inside a running-container:
+docker exec -it <cid/cname> /bin/bash
+docker exec -it app-cont /bin/bash
+
+run a stopped-container and go inside the container:
+docker run -itd <cid/cname> /bin/bash
