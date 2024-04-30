@@ -50,13 +50,13 @@ pipeline {
         //     }
         // }
 
-        stage('Cleanup Previous Containers') {
-            steps {
-                script {
-                    sh 'docker-compose down'
-                }
-            }
-        }
+        // stage('Cleanup Previous Containers') {
+        //     steps {
+        //         script {
+        //             sh 'docker-compose down'
+        //         }
+        //     }
+        // }
 
         stage('Build and Test') {
             steps {
