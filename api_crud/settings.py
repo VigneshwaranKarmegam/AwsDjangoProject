@@ -146,15 +146,23 @@ WSGI_APPLICATION = 'api_crud.wsgi.application'
 
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'DjangoAwsDB',
-        'USER': 'postgres',
-        'PASSWORD': '',
-        #'HOST': 'db-instance-id-1.cvuw2cukgjmq.us-east-2.rds.amazonaws.com',
-        'HOST': 'postgrescont',
-        'PORT': '5432'
+        "default": {
+        "ENGINE": os.environ.get("SQL_ENGINE"),
+        "NAME": os.environ.get("SQL_DATABASE"),
+        "USER": os.environ.get("SQL_USER"),
+        "PASSWORD": os.environ.get("SQL_PASSWORD"),
+        "HOST": os.environ.get("SQL_HOST"),
+        "PORT": os.environ.get("SQL_PORT"),
     }
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.postgresql',
+    #     'NAME': 'DjangoAwsDB',
+    #     'USER': 'postgres',
+    #     'PASSWORD': '',
+    #     #'HOST': 'db-instance-id-1.cvuw2cukgjmq.us-east-2.rds.amazonaws.com',
+    #     'HOST': 'postgrescont',
+    #     'PORT': '5432'
+    # }
 }
 
 # Password validation

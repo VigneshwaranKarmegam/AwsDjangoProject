@@ -1,3 +1,13 @@
+# Exclude Python compiled files
+*.pyc
+
+# Exclude macOS system files
+.DS_Store
+
+# Exclude environment-specific configuration files
+.env
+.env.db
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
